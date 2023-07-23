@@ -1,5 +1,5 @@
 {
-	"name": "get-port",
+	"name": "@qiuqfang/get-port",
 	"version": "7.0.0",
 	"description": "Get an available port",
 	"source": "index.js",

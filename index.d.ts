@@ -42,7 +42,7 @@ console.log(await getPort({port: [3000, 3001, 3002]}));
 // Will use any element in the preferred ports array if available, otherwise fall back to a random port
 ```
 */
-export default function getPort(options?: Options): Promise<number>;
+export function getPort(options?: Options): Promise<number>;
 
 /**
 Generate port numbers in the given range `from`...`to`.
