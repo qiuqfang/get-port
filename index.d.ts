@@ -1,4 +1,4 @@
-import {type ListenOptions} from 'node:net';
+import { type ListenOptions } from "node:net";
 
 export type Options = {
 	/**
@@ -19,7 +19,7 @@ export type Options = {
 	By default, it checks availability on all local addresses defined in [OS network interfaces](https://nodejs.org/api/os.html#os_os_networkinterfaces). If this option is set, it will only check the given host.
 	*/
 	readonly host?: string;
-} & Omit<ListenOptions, 'port'>;
+} & Omit<ListenOptions, "port">;
 
 /**
 Get an available TCP port number.
@@ -42,7 +42,7 @@ console.log(await getPort({port: [3000, 3001, 3002]}));
 // Will use any element in the preferred ports array if available, otherwise fall back to a random port
 ```
 */
-export default function getPort(options?: Options): Promise<number>;
+export function getPort(options?: Options): Promise<number>;
 
 /**
 Generate port numbers in the given range `from`...`to`.

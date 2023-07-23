@@ -1,17 +1,19 @@
-# get-port
+# @qiuqfang/get-port
 
-> Get an available [TCP port](https://en.wikipedia.org/wiki/Port_(computer_networking)).
+Get an available TCP port，Support cjs and esm.
+
+> Get an available [TCP port](<https://en.wikipedia.org/wiki/Port_(computer_networking)>).
 
 ## Install
 
 ```sh
-npm install get-port
+npm install @qiuqfang/get-port
 ```
 
 ## Usage
 
 ```js
-import getPort from 'get-port';
+import { getPort } from "@qiuqfang/get-port";
 
 console.log(await getPort());
 //=> 51402
@@ -20,27 +22,27 @@ console.log(await getPort());
 Pass in a preferred port:
 
 ```js
-import getPort from 'get-port';
+import { getPort } from "@qiuqfang/get-port";
 
-console.log(await getPort({port: 3000}));
+console.log(await getPort({ port: 3000 }));
 // Will use 3000 if available, otherwise fall back to a random port
 ```
 
 Pass in an array of preferred ports:
 
 ```js
-import getPort from 'get-port';
+import { getPort } from "@qiuqfang/get-port";
 
-console.log(await getPort({port: [3000, 3001, 3002]}));
+console.log(await getPort({ port: [3000, 3001, 3002] }));
 // Will use any element in the preferred ports array if available, otherwise fall back to a random port
 ```
 
 Use the `portNumbers()` helper in case you need a port in a certain range:
 
 ```js
-import getPort, {portNumbers} from 'get-port';
+import { getPort, portNumbers } from "@qiuqfang/get-port";
 
-console.log(await getPort({port: portNumbers(3000, 3100)}));
+console.log(await getPort({ port: portNumbers(3000, 3100) }));
 // Will use any port from 3000 to 3100, otherwise fall back to a random port
 ```
 
@@ -102,4 +104,5 @@ Race conditions in the same process are mitigated against by using a lightweight
 
 ## Related
 
+- [get-port](https://github.com/sindresorhus/get-port) - API for this module
 - [get-port-cli](https://github.com/sindresorhus/get-port-cli) - CLI for this module
