@@ -17,11 +17,11 @@
   },
   "scripts": {
     "build": "microbundle --target=node -f=modern,cjs --sourcemap=false",
+		"release": "pnpm publish --access=public --no-git-checks",
     "test": "xo && ava && tsd"
   },
   "files": [
     "dist",
-    "index.js",
     "index.d.ts"
   ],
   "keywords": [
