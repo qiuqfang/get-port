@@ -14,6 +14,7 @@
 		"url": "https://sindresorhus.com"
 	},
 	"type": "module",
+	"output.exports": "named",
 	"exports": {
 		"types": "./index.d.ts",
 		"import": "./dist/index.mjs",
@@ -23,7 +24,7 @@
 		"node": ">=16"
 	},
 	"scripts": {
-		"build": "microbundle --sourcemap=false --compress false",
+		"build": "microbundle --target=node -f=modern,cjs --sourcemap=false",
 		"test": "xo && ava && tsd"
 	},
 	"files": [
