@@ -1,5 +1,5 @@
-import net from 'node:net';
-import os from 'node:os';
+import net from "node:net";
+import os from "node:os";
 
 class Locked extends Error {
 	constructor(port) {
@@ -28,7 +28,7 @@ const getLocalHosts = () => {
 
 	// Add undefined value for createServer function to use default host,
 	// and default IPv4 host in case createServer defaults to IPv6.
-	const results = new Set([undefined, '0.0.0.0']);
+	const results = new Set([undefined, "0.0.0.0"]);
 
 	for (const _interface of Object.values(interfaces)) {
 		for (const config of _interface) {
@@ -39,14 +39,14 @@ const getLocalHosts = () => {
 	return results;
 };
 
-const checkAvailablePort = options =>
+const checkAvailablePort = (options) =>
 	new Promise((resolve, reject) => {
 		const server = net.createServer();
 		server.unref();
-		server.on('error', reject);
+		server.on("error", reject);
 
 		server.listen(options, () => {
-			const {port} = server.address();
+			const { port } = server.address();
 			server.close(() => {
 				resolve(port);
 			});
@@ -60,9 +60,9 @@ const getAvailablePort = async (options, hosts) => {
 
 	for (const host of hosts) {
 		try {
-			await checkAvailablePort({port: options.port, host}); // eslint-disable-line no-await-in-loop
+			await checkAvailablePort({ port: options.port, host }); // eslint-disable-line no-await-in-loop
 		} catch (error) {
-			if (!['EADDRNOTAVAIL', 'EINVAL'].includes(error.code)) {
+			if (!["EADDRNOTAVAIL", "EINVAL"].includes(error.code)) {
 				throw error;
 			}
 		}
@@ -71,9 +71,9 @@ const getAvailablePort = async (options, hosts) => {
 	return options.port;
 };
 
-const portCheckSequence = function * (ports) {
+const portCheckSequence = function* (ports) {
 	if (ports) {
-		yield * ports;
+		yield* ports;
 	}
 
 	yield 0; // Fall back to 0 if anything else failed
@@ -85,23 +85,27 @@ export async function getPort(options) {
 
 	if (options) {
 		if (options.port) {
-			ports = typeof options.port === 'number' ? [options.port] : options.port;
+			ports = typeof options.port === "number" ? [options.port] : options.port;
 		}
 
 		if (options.exclude) {
 			const excludeIterable = options.exclude;
 
-			if (typeof excludeIterable[Symbol.iterator] !== 'function') {
-				throw new TypeError('The `exclude` option must be an iterable.');
+			if (typeof excludeIterable[Symbol.iterator] !== "function") {
+				throw new TypeError("The `exclude` option must be an iterable.");
 			}
 
 			for (const element of excludeIterable) {
-				if (typeof element !== 'number') {
-					throw new TypeError('Each item in the `exclude` option must be a number corresponding to the port you want excluded.');
+				if (typeof element !== "number") {
+					throw new TypeError(
+						"Each item in the `exclude` option must be a number corresponding to the port you want excluded."
+					);
 				}
 
 				if (!Number.isSafeInteger(element)) {
-					throw new TypeError(`Number ${element} in the exclude option is not a safe integer and can't be used`);
+					throw new TypeError(
+						`Number ${element} in the exclude option is not a safe integer and can't be used`
+					);
 				}
 			}
 
@@ -131,31 +135,37 @@ export async function getPort(options) {
 				continue;
 			}
 
-			let availablePort = await getAvailablePort({...options, port}, hosts); // eslint-disable-line no-await-in-loop
-			while (lockedPorts.old.has(availablePort) || lockedPorts.young.has(availablePort)) {
+			let availablePort = await getAvailablePort({ ...options, port }, hosts); // eslint-disable-line no-await-in-loop
+			while (
+				lockedPorts.old.has(availablePort) ||
+				lockedPorts.young.has(availablePort)
+			) {
 				if (port !== 0) {
 					throw new Locked(port);
 				}
 
-				availablePort = await getAvailablePort({...options, port}, hosts); // eslint-disable-line no-await-in-loop
+				availablePort = await getAvailablePort({ ...options, port }, hosts); // eslint-disable-line no-await-in-loop
 			}
 
 			lockedPorts.young.add(availablePort);
 
 			return availablePort;
 		} catch (error) {
-			if (!['EADDRINUSE', 'EACCES'].includes(error.code) && !(error instanceof Locked)) {
+			if (
+				!["EADDRINUSE", "EACCES"].includes(error.code) &&
+				!(error instanceof Locked)
+			) {
 				throw error;
 			}
 		}
 	}
 
-	throw new Error('No available ports found');
+	throw new Error("No available ports found");
 }
 
 export function portNumbers(from, to) {
 	if (!Number.isInteger(from) || !Number.isInteger(to)) {
-		throw new TypeError('`from` and `to` must be integer numbers');
+		throw new TypeError("`from` and `to` must be integer numbers");
 	}
 
 	if (from < minPort || from > maxPort) {
@@ -167,10 +177,10 @@ export function portNumbers(from, to) {
 	}
 
 	if (from > to) {
-		throw new RangeError('`to` must be greater than or equal to `from`');
+		throw new RangeError("`to` must be greater than or equal to `from`");
 	}
 
-	const generator = function * (from, to) {
+	const generator = function* (from, to) {
 		for (let port = from; port <= to; port++) {
 			yield port;
 		}

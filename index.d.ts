@@ -1,4 +1,4 @@
-import {type ListenOptions} from 'node:net';
+import { type ListenOptions } from "node:net";
 
 export type Options = {
 	/**
@@ -19,7 +19,7 @@ export type Options = {
 	By default, it checks availability on all local addresses defined in [OS network interfaces](https://nodejs.org/api/os.html#os_os_networkinterfaces). If this option is set, it will only check the given host.
 	*/
 	readonly host?: string;
-} & Omit<ListenOptions, 'port'>;
+} & Omit<ListenOptions, "port">;
 
 /**
 Get an available TCP port number.
